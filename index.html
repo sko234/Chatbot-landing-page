@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AssistAI | AI Chatbots for Websites, Support, and Sales</title>
+  <meta name="description" content="AssistAI helps website visitors get instant answers, qualify leads, and route conversations to your team with context-rich handoff notes.">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="AssistAI | AI Chatbots for Websites">
+  <meta property="og:description" content="Launch an AI website assistant that answers questions, qualifies leads, and hands off high-intent visitors to your team.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AssistAI | AI Chatbots for Websites">
+  <meta name="twitter:description" content="Useful, calm, on-brand AI chatbots for website support, sales, and lead routing.">
+  <style>
+    :root {
+      --black: #000;
+      --white: #fff;
+      --ink-soft: #202020;
+      --line: #d8d8d8;
+      --line-dark: #2e2e2e;
+      --muted: #f5f5f5;
+      --space: clamp(1rem, 2vw, 1.5rem);
+      --radius: 8px;
+      --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--white);
+      color: var(--black);
+      font-family: "Aptos", "Segoe UI", sans-serif;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    .button {
+      border: 1px solid var(--black);
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 0 1rem;
+      font: 700 0.9rem/1 "Aptos", "Segoe UI", sans-serif;
+      transition: transform 180ms ease, background 180ms ease, color 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    button:focus-visible,
+    .button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: 3px;
+    }
+
+    .button.primary {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .button.secondary {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+    }
+
+    .button.primary:hover {
+      background: var(--white);
+      color: var(--black);
+      box-shadow: 6px 6px 0 var(--black);
+    }
+
+    .button.secondary:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .site-header {
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      min-height: 72px;
+      padding: 0 clamp(1rem, 4vw, 4rem);
+      position: sticky;
+      top: 0;
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(12px);
+      z-index: 10;
+    }
+
+    .brand {
+      align-items: center;
+      display: inline-flex;
+      font-weight: 900;
+      gap: 0.65rem;
+      letter-spacing: 0;
+    }
+
+    .brand-mark {
+      align-items: center;
+      background: var(--black);
+      color: var(--white);
+      display: inline-flex;
+      height: 34px;
+      justify-content: center;
+      width: 34px;
+      border-radius: 50%;
+      font-family: Georgia, serif;
+      font-size: 1.25rem;
+    }
+
+    nav {
+      display: flex;
+      gap: clamp(1rem, 3vw, 2rem);
+      font-size: 0.9rem;
+      font-weight: 700;
+    }
+
+    nav a {
+      position: relative;
+      transition: color 180ms ease, transform 180ms ease;
+    }
+
+    nav a::after {
+      background: var(--black);
+      bottom: -0.4rem;
+      content: "";
+      height: 2px;
+      left: 0;
+      position: absolute;
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 220ms var(--ease-out);
+      width: 100%;
+    }
+
+    nav a:hover {
+      transform: translateY(-2px);
+    }
+
+    nav a:hover::after,
+    nav a:focus-visible::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.02fr) minmax(320px, 0.98fr);
+      min-height: calc(100vh - 72px);
+      border-bottom: 1px solid var(--black);
+    }
+
+    .hero-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(3rem, 8vw, 7rem) clamp(1rem, 6vw, 5rem);
+    }
+
+    .eyebrow {
+      border-bottom: 1px solid var(--black);
+      border-top: 1px solid var(--black);
+      display: inline-flex;
+      font-size: 0.75rem;
+      font-weight: 900;
+      margin: 0 0 1.25rem;
+      padding: 0.35rem 0;
+      text-transform: uppercase;
+      width: max-content;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3.3rem, 9vw, 8rem);
+      letter-spacing: 0;
+      line-height: 0.88;
+      margin-bottom: 1.5rem;
+      max-width: 10ch;
+    }
+
+    .lead {
+      color: var(--ink-soft);
+      font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+      font-weight: 700;
+      max-width: 42rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 1.25rem;
+    }
+
+    .proof-row {
+      border-top: 1px solid var(--line);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1px;
+      margin-top: clamp(2rem, 5vw, 4rem);
+      background: var(--line);
+    }
+
+    .proof-item {
+      background: var(--white);
+      padding: 1rem 0;
+    }
+
+    .proof-item strong {
+      display: block;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      line-height: 1;
+    }
+
+    .proof-item span {
+      color: var(--ink-soft);
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      margin-top: 0.35rem;
+      text-transform: uppercase;
+    }
+
+    .assistant-panel {
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(1rem, 5vw, 4rem);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .assistant-panel::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
+      background-size: 28px 28px;
+      mask-image: linear-gradient(120deg, transparent 0%, black 35%, black 72%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .chat-window {
+      animation: chatWindowIn 700ms var(--ease-out) both;
+      border: 1px solid var(--white);
+      border-radius: var(--radius);
+      margin-inline: auto;
+      max-width: 520px;
+      overflow: hidden;
+      position: relative;
+      width: 100%;
+      z-index: 1;
+      box-shadow: 18px 18px 0 rgba(255, 255, 255, 0.16);
+    }
+
+    .chat-topbar {
+      align-items: center;
+      border-bottom: 1px solid var(--white);
+      display: flex;
+      justify-content: space-between;
+      min-height: 56px;
+      padding: 0 1rem;
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .status {
+      align-items: center;
+      display: inline-flex;
+      gap: 0.45rem;
+    }
+
+    .status::before {
+      animation: pulse 1.6s ease-in-out infinite;
+      background: var(--white);
+      border-radius: 50%;
+      content: "";
+      height: 8px;
+      width: 8px;
+    }
+
+    .chat-body {
+      display: grid;
+      gap: 0.85rem;
+      padding: 1rem;
+    }
+
+    .message {
+      animation: messageIn 520ms var(--ease-out) both;
+      border: 1px solid var(--white);
+      border-radius: var(--radius);
+      max-width: 86%;
+      padding: 0.85rem;
+    }
+
+    .message:nth-child(1) {
+      animation-delay: 400ms;
+    }
+
+    .message:nth-child(2) {
+      animation-delay: 850ms;
+    }
+
+    .message:nth-child(3) {
+      animation-delay: 1300ms;
+    }
+
+    .message:nth-child(4) {
+      animation-delay: 1750ms;
+    }
+
+    .message.user {
+      justify-self: end;
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .message.bot {
+      justify-self: start;
+    }
+
+    .message small {
+      display: block;
+      font-weight: 900;
+      margin-bottom: 0.35rem;
+      text-transform: uppercase;
+    }
+
+    .handoff {
+      animation: messageIn 520ms var(--ease-out) 2200ms both;
+      border-top: 1px solid var(--white);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+      padding: 1rem;
+      align-items: center;
+    }
+
+    .handoff span {
+      color: #e7e7e7;
+      font-size: 0.9rem;
+    }
+
+    .handoff button {
+      background: var(--white);
+      color: var(--black);
+      min-height: 40px;
+      white-space: nowrap;
+    }
+
+    .handoff button:hover {
+      background: var(--black);
+      border-color: var(--white);
+      color: var(--white);
+    }
+
+    .section {
+      padding: clamp(3.5rem, 7vw, 6rem) clamp(1rem, 5vw, 4rem);
+    }
+
+    .section-heading {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(260px, 0.55fr);
+      gap: clamp(1.5rem, 5vw, 4rem);
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.4rem, 5vw, 5rem);
+      letter-spacing: 0;
+      line-height: 0.95;
+      margin-bottom: 0;
+    }
+
+    .section-heading p {
+      color: var(--ink-soft);
+      font-size: clamp(1.08rem, 1.5vw, 1.25rem);
+      font-weight: 800;
+      margin: 0;
+      align-self: end;
+    }
+
+    .feature-grid {
+      border: 1px solid var(--black);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .feature {
+      min-height: 270px;
+      padding: clamp(1rem, 3vw, 2rem);
+      border-right: 1px solid var(--black);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: background 220ms ease, color 220ms ease, transform 220ms ease;
+    }
+
+    .feature:hover {
+      background: var(--black);
+      color: var(--white);
+      transform: translateY(-4px);
+    }
+
+    .feature:last-child {
+      border-right: 0;
+    }
+
+    .feature-number {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 4rem;
+      line-height: 1;
+    }
+
+    h3 {
+      font-size: clamp(1.25rem, 2vw, 1.65rem);
+      line-height: 1.1;
+      margin-bottom: 0.7rem;
+    }
+
+    .feature p,
+    .step p,
+    .quote p {
+      color: var(--ink-soft);
+      margin-bottom: 0;
+      transition: color 220ms ease;
+    }
+
+    .feature:hover p {
+      color: var(--white);
+    }
+
+    .workflow {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .workflow .section-heading p,
+    .workflow .step p {
+      color: #e4e4e4;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border-top: 1px solid var(--white);
+      border-left: 1px solid var(--white);
+    }
+
+    .step {
+      border-right: 1px solid var(--white);
+      border-bottom: 1px solid var(--white);
+      min-height: 230px;
+      padding: 1.35rem;
+      transition: background 220ms ease, color 220ms ease, transform 220ms ease;
+    }
+
+    .step:hover {
+      background: var(--white);
+      color: var(--black);
+      transform: translateY(-4px);
+    }
+
+    .workflow .step:hover p {
+      color: var(--ink-soft);
+    }
+
+    .step strong {
+      display: inline-flex;
+      border: 1px solid var(--white);
+      border-radius: 50%;
+      height: 42px;
+      width: 42px;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      transition: border-color 220ms ease, background 220ms ease, color 220ms ease;
+    }
+
+    .step:hover strong {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+
+    .quote-band {
+      display: grid;
+      grid-template-columns: minmax(0, 0.75fr) minmax(280px, 1fr);
+      border-top: 1px solid var(--black);
+      border-bottom: 1px solid var(--black);
+    }
+
+    .quote-label {
+      background: var(--black);
+      color: var(--white);
+      display: flex;
+      align-items: center;
+      padding: clamp(2rem, 5vw, 4rem);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2rem, 4vw, 4.5rem);
+      line-height: 0.95;
+    }
+
+    .quote {
+      padding: clamp(2rem, 5vw, 4rem);
+    }
+
+    .quote blockquote {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(1.8rem, 3.2vw, 3.3rem);
+      line-height: 1.05;
+      margin: 0 0 1.5rem;
+    }
+
+    .quote p {
+      font-size: clamp(1.12rem, 1.8vw, 1.45rem);
+      font-weight: 900;
+      max-width: 46rem;
+    }
+
+    .reveal-text {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+
+    .reveal-text.is-visible {
+      animation: textRise 650ms var(--ease-out) both;
+    }
+
+    .quote p.reveal-text.is-visible {
+      animation-delay: 180ms;
+    }
+
+    .faq {
+      border-top: 1px solid var(--black);
+      padding: clamp(3rem, 6vw, 5rem) clamp(1rem, 5vw, 4rem);
+    }
+
+    .faq-inner {
+      margin: 0 auto;
+      max-width: 1080px;
+    }
+
+    .faq-header {
+      text-align: center;
+    }
+
+    .faq-header .eyebrow {
+      margin-inline: auto;
+    }
+
+    .faq-header h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.1rem, 4.5vw, 4rem);
+      margin-bottom: 0.65rem;
+    }
+
+    .faq-header p {
+      color: var(--ink-soft);
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      margin-bottom: 0;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--white);
+      box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+    }
+
+    .faq-item[open] {
+      border-color: var(--black);
+      box-shadow: 0 0 0 1px var(--black);
+    }
+
+    .faq-question {
+      align-items: center;
+      cursor: pointer;
+      display: flex;
+      gap: 1rem;
+      list-style: none;
+      padding: 1rem 1.1rem;
+      font-size: clamp(1rem, 1.4vw, 1.1rem);
+      font-weight: 800;
+    }
+
+    .faq-question::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-question::after {
+      content: "+";
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1;
+      margin-left: auto;
+    }
+
+    .faq-item[open] .faq-question::after {
+      content: "×";
+      font-size: 1.4rem;
+    }
+
+    .faq-answer {
+      color: var(--ink-soft);
+      padding: 0 1.1rem 1.1rem;
+      margin: 0;
+      max-width: 100%;
+    }
+
+    .faq-question:focus-visible {
+      outline: 2px solid var(--black);
+      outline-offset: -2px;
+    }
+
+    .final-cta {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1.5rem;
+      align-items: end;
+      padding: clamp(3rem, 7vw, 6rem) clamp(1rem, 5vw, 4rem);
+    }
+
+    .final-cta h2 {
+      max-width: 11ch;
+    }
+
+    .final-cta .button {
+      font-size: clamp(1.05rem, 1.6vw, 1.35rem);
+      font-weight: 900;
+      min-height: 64px;
+      padding: 0 1.75rem;
+    }
+
+    footer {
+      background: var(--black);
+      border-top: 1px solid var(--black);
+      color: var(--white);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      gap: 1.5rem;
+      align-items: center;
+      padding: 1rem clamp(1rem, 5vw, 3rem);
+      font-size: 0.9rem;
+    }
+
+    .footer-brand {
+      color: var(--white);
+      display: block;
+      font-weight: 900;
+      margin-bottom: 0.35rem;
+    }
+
+    .footer-copy {
+      max-width: 28rem;
+    }
+
+    .footer-links {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .footer-links a,
+    .footer-email {
+      color: var(--white);
+    }
+
+    .footer-links a {
+      font-weight: 800;
+    }
+
+    .footer-links a:hover {
+      text-decoration: underline;
+      text-underline-offset: 0.25rem;
+    }
+
+    .footer-email {
+      justify-self: end;
+      font-weight: 800;
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+      }
+      50% {
+        opacity: 0.45;
+        transform: scale(0.78);
+      }
+    }
+
+    @keyframes chatWindowIn {
+      from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes messageIn {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes textRise {
+      from {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 880px) {
+      nav {
+        display: none;
+      }
+
+      .hero,
+      .section-heading,
+      .quote-band,
+      .faq-grid,
+      .final-cta,
+      footer {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        min-height: auto;
+      }
+
+      .assistant-panel {
+        min-height: auto;
+        padding-block: clamp(2rem, 7vw, 4rem);
+      }
+
+      .feature-grid,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .feature {
+        border-right: 0;
+        border-bottom: 1px solid var(--black);
+        min-height: 220px;
+      }
+
+      .feature:last-child {
+        border-bottom: 0;
+      }
+
+      .step {
+        min-height: 190px;
+      }
+
+      .proof-row {
+        grid-template-columns: 1fr;
+      }
+
+      .proof-item {
+        padding: 1rem;
+      }
+
+      .final-cta {
+        align-items: start;
+      }
+
+      .footer-links {
+        justify-content: center;
+      }
+
+      .footer-email {
+        justify-self: start;
+        text-align: left;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .site-header {
+        min-height: 64px;
+        padding-inline: 1rem;
+      }
+
+      h1 {
+        font-size: clamp(2.7rem, 15vw, 4.1rem);
+      }
+
+      .hero-copy {
+        padding: 3rem 1rem 2.5rem;
+      }
+
+      .assistant-panel {
+        padding: 2rem 1rem 3rem;
+      }
+
+      .chat-window {
+        box-shadow: 10px 10px 0 rgba(255, 255, 255, 0.16);
+      }
+
+      .chat-topbar {
+        font-size: 0.7rem;
+        min-height: 50px;
+      }
+
+      .chat-body {
+        gap: 0.7rem;
+        padding: 0.8rem;
+      }
+
+      .message {
+        max-width: 94%;
+        padding: 0.75rem;
+      }
+
+      .handoff {
+        grid-template-columns: 1fr;
+      }
+
+      .section,
+      .faq,
+      .final-cta {
+        padding-inline: 1rem;
+      }
+
+      .feature-number {
+        font-size: 3.2rem;
+      }
+
+      .quote-label {
+        font-size: clamp(2rem, 12vw, 3.2rem);
+      }
+
+      .final-cta .button {
+        width: 100%;
+      }
+
+      footer {
+        gap: 1.25rem;
+      }
+    }
+
+    @media (hover: none) {
+      .feature:hover,
+      .step:hover,
+      nav a:hover,
+      .button:hover {
+        transform: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#" aria-label="AssistAI home">
+      <span class="brand-mark">A</span>
+      <span>AssistAI</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="#features">Features</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#demo">Demo</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">AI website assistant chatbots</p>
+        <h1>Help every visitor find the answer.</h1>
+        <p class="lead">
+          AssistAI turns your website into a guided conversation, answering questions,
+          qualifying leads, and handing complex requests to your team with context intact.
+        </p>
+        <div class="hero-actions" aria-label="Primary actions">
+          <a class="button secondary" href="#features">See features</a>
+        </div>
+        <div class="proof-row" aria-label="Performance highlights">
+          <div class="proof-item">
+            <strong>24/7</strong>
+            <span>Visitor support</span>
+          </div>
+          <div class="proof-item">
+            <strong>3x</strong>
+            <span>More qualified chats</span>
+          </div>
+          <div class="proof-item">
+            <strong>0</strong>
+            <span>Missed questions</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="assistant-panel" aria-label="Chatbot product preview">
+        <div class="chat-window">
+          <div class="chat-topbar">
+            <span>Website assistant</span>
+            <span class="status">Live</span>
+          </div>
+          <div class="chat-body">
+            <div class="message user">
+              <small>Visitor</small>
+              Do you integrate with Shopify and HubSpot?
+            </div>
+            <div class="message bot">
+              <small>AssistAI</small>
+              Yes. I can connect the product catalog, answer store questions,
+              and send qualified leads to HubSpot with the conversation summary.
+            </div>
+            <div class="message user">
+              <small>Visitor</small>
+              Can someone contact me today?
+            </div>
+            <div class="message bot">
+              <small>AssistAI</small>
+              Absolutely. I found an available specialist and prepared the handoff notes.
+            </div>
+          </div>
+          <div class="handoff">
+            <span>Lead score: 92. Intent: Integration pricing.</span>
+            <button type="button">Send to sales</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="features">
+      <div class="section-heading">
+        <h2>A front desk for your website.</h2>
+        <p class="reveal-text">
+          Give visitors immediate answers while your team keeps control over tone,
+          knowledge, routing, and follow-up.
+        </p>
+      </div>
+      <div class="feature-grid">
+        <article class="feature">
+          <span class="feature-number">01</span>
+          <div>
+            <h3>Trained on your site</h3>
+            <p>Pull answers from your pages, docs, FAQs, policies, and product details.</p>
+          </div>
+        </article>
+        <article class="feature">
+          <span class="feature-number">02</span>
+          <div>
+            <h3>Qualifies serious leads</h3>
+            <p>Ask the right follow-up questions and route high-intent visitors faster.</p>
+          </div>
+        </article>
+        <article class="feature">
+          <span class="feature-number">03</span>
+          <div>
+            <h3>Hands off cleanly</h3>
+            <p>Send transcripts, summaries, contact details, and next steps to your team.</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section workflow" id="workflow">
+      <div class="section-heading">
+        <h2>From question to booked call.</h2>
+        <p>
+          The chatbot works like a sharp assistant: listen, answer, qualify, and pass the
+          conversation forward when a person should step in.
+        </p>
+      </div>
+      <div class="steps">
+        <article class="step">
+          <strong>1</strong>
+          <h3>Capture</h3>
+          <p>Welcome visitors at the exact moment they need help.</p>
+        </article>
+        <article class="step">
+          <strong>2</strong>
+          <h3>Answer</h3>
+          <p>Use approved business knowledge to respond clearly.</p>
+        </article>
+        <article class="step">
+          <strong>3</strong>
+          <h3>Route</h3>
+          <p>Detect intent and move each visitor to the right path.</p>
+        </article>
+        <article class="step">
+          <strong>4</strong>
+          <h3>Report</h3>
+          <p>Show the questions, objections, and opportunities your site creates.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="quote-band" id="demo">
+      <div class="quote-label">Built for quiet conversion.</div>
+      <div class="quote">
+        <blockquote class="reveal-text">
+          &ldquo;Your best salesperson should be available on every page, every hour.&rdquo;
+        </blockquote>
+        <p class="reveal-text">
+          Launch a chatbot that feels useful, calm, and on-brand from the first message.
+        </p>
+      </div>
+    </section>
+
+    <section class="faq" id="faq">
+      <div class="faq-inner">
+        <div class="faq-header">
+          <p class="eyebrow">FAQ</p>
+          <h2>Frequently Asked Questions</h2>
+          <p>Everything you need to know about working with AssistAI.</p>
+        </div>
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary class="faq-question">What does AssistAI do?</summary>
+            <p class="faq-answer">AssistAI builds AI chatbots that answer questions, capture leads, and support visitors on your website.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What AI services does AssistAI offer?</summary>
+            <p class="faq-answer">We offer AI customer support, lead generation, consulting, custom workflows, and website development for AI-powered experiences.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Where is AssistAI located?</summary>
+            <p class="faq-answer">AssistAI works remotely and collaborates with clients online, wherever they are located.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">Do you work with international clients?</summary>
+            <p class="faq-answer">Yes. We work with clients across different markets and time zones.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What industries does AssistAI serve?</summary>
+            <p class="faq-answer">We support websites in support, sales, ecommerce, services, and other customer-facing industries.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What technologies does AssistAI use?</summary>
+            <p class="faq-answer">We use modern AI tools, web technologies, and automation platforms tailored to each project.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">How long does it take to implement an AI system?</summary>
+            <p class="faq-answer">Most projects take a few days to a few weeks, depending on scope and integrations.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What is the cost of AI automation with AssistAI?</summary>
+            <p class="faq-answer">Pricing depends on the scope, features, and integrations your project needs.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">What happens after my AI system is deployed?</summary>
+            <p class="faq-answer">After launch, we monitor performance, refine answers, and adjust the system as your business evolves.</p>
+          </details>
+          <details class="faq-item">
+            <summary class="faq-question">How do I get started with AssistAI?</summary>
+            <p class="faq-answer">Send us a message with your goals, and we will recommend the fastest path to launch.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <section class="final-cta">
+      <h2>Start with your busiest page.</h2>
+      <a class="button primary" href="mailto:atanastanev362@gmail.com?subject=AssistAI%20chatbot%20inquiry">Get started</a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-copy">
+      <span class="footer-brand">AssistAI</span>
+      <span>&copy; 2026 AssistAI. AI chatbots for websites, support, and sales.</span>
+    </div>
+    <div class="footer-links" aria-label="Footer navigation">
+      <a href="#features">Features</a>
+      <a href="#workflow">Workflow</a>
+      <a href="#demo">Demo</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="footer-email" href="mailto:atanastanev362@gmail.com?subject=AssistAI%20chatbot%20inquiry">atanastanev362@gmail.com</a>
+  </footer>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What does AssistAI do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AssistAI builds AI chatbots that answer questions, capture leads, and support visitors on your website."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What AI services does AssistAI offer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We offer AI customer support, lead generation, consulting, custom workflows, and website development for AI-powered experiences."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Where is AssistAI located?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "AssistAI works remotely and collaborates with clients online, wherever they are located."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do you work with international clients?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. We work with clients across different markets and time zones."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What industries does AssistAI serve?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We support websites in support, sales, ecommerce, services, and other customer-facing industries."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What technologies does AssistAI use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "We use modern AI tools, web technologies, and automation platforms tailored to each project."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How long does it take to implement an AI system?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most projects take a few days to a few weeks, depending on scope and integrations."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the cost of AI automation with AssistAI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Pricing depends on the scope, features, and integrations your project needs."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens after my AI system is deployed?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "After launch, we monitor performance, refine answers, and adjust the system as your business evolves."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How do I get started with AssistAI?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Send us a message with your goals, and we will recommend the fastest path to launch."
+          }
+        }
+      ]
+    }
+  </script>
+  <script>
+    const revealText = document.querySelectorAll(".reveal-text");
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.35 });
+
+      revealText.forEach((element) => revealObserver.observe(element));
+    } else {
+      revealText.forEach((element) => element.classList.add("is-visible"));
+    }
+  </script>
+  <script>
+    (function(){if(!window.chatbase||window.chatbase("getState")!=="initialized"){window.chatbase=(...arguments)=>{if(!window.chatbase.q){window.chatbase.q=[]}window.chatbase.q.push(arguments)};window.chatbase=new Proxy(window.chatbase,{get(target,prop){if(prop==="q"){return target.q}return(...args)=>target(prop,...args)}})}const onLoad=function(){const script=document.createElement("script");script.src="https://www.chatbase.co/embed.min.js";script.id="PdX67NPz-2r8cifj4GjqM";script.domain="www.chatbase.co";document.body.appendChild(script)};if(document.readyState==="complete"){onLoad()}else{window.addEventListener("load",onLoad)}})();
+  </script>
+</body>
+</html>
